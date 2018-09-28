@@ -7,6 +7,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import {ApolloProvider} from "react-apollo";
+import {BrowserRouter} from "react-router-dom";
 
 const httpLink = createHttpLink({
     uri: 'https://hackernews-gql.herokuapp.com'
@@ -18,9 +19,11 @@ const apollo = new ApolloClient({
 });
 
 ReactDOM.render(
-    <ApolloProvider client={apollo}>
-        <App />
-    </ApolloProvider>,
+    <BrowserRouter>
+        <ApolloProvider client={apollo}>
+            <App />
+        </ApolloProvider>
+    </BrowserRouter>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
