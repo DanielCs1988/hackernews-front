@@ -2,8 +2,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
 import RenderedLinkList from "../../components/LinkList/LinkList";
-import Loader from "../../hoc/Loader/Loader";
-import ErrorHandler from "../../hoc/ErrorHandler/ErrorHandler";
+import HandleLoadingAndError from "../../hoc/HandleLoadingAndError/HandleLoadingAndError";
 
 const FEED_QUERY = gql`
     query {
@@ -20,11 +19,9 @@ const LinkList = () => (
 // @ts-ignore
     <Query query={FEED_QUERY}>{
         ({ loading, error, data }) => (
-            <Loader loading={loading || !data}>
-                <ErrorHandler error={error}>
-                    <RenderedLinkList links={data.feed} />
-                </ErrorHandler>
-            </Loader>
+            <HandleLoadingAndError loading={loading} error={error}>
+                <RenderedLinkList links={data ? data.feed: []} />
+            </HandleLoadingAndError>
         )
     }</Query>
 );
